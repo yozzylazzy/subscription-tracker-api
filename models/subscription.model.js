@@ -86,6 +86,7 @@ subsciprionSchema.pre('save', function () {
     this.status = 'expired';
   }
 
+  // eslint-disable-next-line no-undef
   next();
 });
 
