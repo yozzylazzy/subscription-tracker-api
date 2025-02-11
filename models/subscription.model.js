@@ -47,7 +47,6 @@ const subscriptionSchema = new mongoose.Schema({
   },
   renewalDate: {
     type: Date,
-    required: true,
     validate: {
       validator: function (value) {
         return value > this.startDate;
@@ -65,7 +64,7 @@ const subscriptionSchema = new mongoose.Schema({
 
 // Auto-calculate renewal date if missing
 // Function for pre save hook
-subscriptionSchema.pre('save', function () {
+subscriptionSchema.pre('save', function (next) {
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -87,7 +86,6 @@ subscriptionSchema.pre('save', function () {
     this.status = 'expired';
   }
 
-  // eslint-disable-next-line no-undef
   next();
 });
 
