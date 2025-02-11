@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const subsciprionSchema = new mongoose.Schema({
+const subscriptionSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Subscription name is required'],
@@ -64,7 +64,8 @@ const subsciprionSchema = new mongoose.Schema({
 }, { timestaps: true });
 
 // Auto-calculate renewal date if missing
-subsciprionSchema.pre('save', function () {
+// Function for pre save hook
+subscriptionSchema.pre('save', function () {
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -90,6 +91,6 @@ subsciprionSchema.pre('save', function () {
   next();
 });
 
-const Subscription = mongoose.model('Subscription', subsciprionSchema);
+const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 export default Subscription;
